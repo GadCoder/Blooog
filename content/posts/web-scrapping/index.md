@@ -1,6 +1,6 @@
 +++
-title = "Web Scrapping con python 101"
-date = 2024-02-19
+title="Web Scrapping con python 101"
+date=2024-02-19
 +++
 
 El arte del web scrapping es uno que todos en el mundo del software deberíamos conocer. Ya sea para crear un comparador de precios como [Compy](https://compy.pe/) o armar datasets para nuestro siguiente modelo de Machine Learning, el saber cómo obtener los datos que necesitamos de una web es una habilidad que no hace daño tener.
