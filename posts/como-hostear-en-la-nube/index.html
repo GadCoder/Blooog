@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="referrer" content="no-referrer">
+
+        <link rel="stylesheet" href="https://blog.gadcoder.com/fonts.css">
+        <link rel="stylesheet" href="https://blog.gadcoder.com/style.css">
+
+        <title>
+    Como hostear lo que quieras en la nube
+</title>
+
+        
+    </head>
+    <body>
+        
+    <div class="wrap">
+        <div class="section" id="title">
+            
+    Como hostear lo que quieras en la nube
+
+        </div>
+        <div class="section" id="sections">
+            
+        </div>
+        <div class="section" id="content">
+            
+    
+        
+            
+    
+    Mon Sep  2, 2024
+
+        
+        
+            
+                &#183; 1173 words
+            
+        
+        
+            
+            
+                &#183; 6 min
+            
+        
+        
+        
+        <hr/>
+    
+    <p>Llega un punto en el que cualquiera que se esté introduciendo al mundo del desarrollo de software necesita hostear algo en la nube. Ya sea una simple página web estática, un api o base de datos; inevitablemente nuestro querido localhost deja de ser suficiente y comenzamos a buscar cómo publicar y compartir nuestros proyectos con los demás, ya sean humanos o scrappers que se encargan de alimentar al siguiente gran LLM de turno. En esta entrada, busco mencionar distintas maneras que tenemos para hostear nuestros proyectos en la web y, finalmente, comentar lo que considero es la mejor manera para hacerlo. </p>
+<p><img src="https://blog.gadcoder.com/posts/como-hostear-en-la-nube/localhost-meme.jpg" alt="Meme de localhost" /></p>
+<h1 id="paginas-estaticas">Páginas estáticas</h1>
+<p>No toda web necesita ser construida usando el último framework de JavaScript que ha salido al mercado. Muchas veces nos basta con hacer uso de HTML y algo de CSS, aunque hay quienes dirían que <a href="https://motherfuckingwebsite.com/">esto último ni siquiera es necesario</a>. En cualquier caso, <a href="https://pages.github.com">Github Pages</a> probablemente sea la opción más conocida para hostear este tipo de páginas. Basta con entrar a la configuración del repositorio y en unos pocos minutos ya contaremos con una url para que el mundo pueda conocer nuestra increíble web. Tenemos incluso la opción de usar un dominio propio, en caso no queramos tener el <em>.github.io</em> en nuestro enlace. </p>
+<p>Si el confiable combo de HTML y CSS no son suficientes, también es posible deployar aplicaciones <a href="https://www.freecodecamp.org/news/how-to-deploy-next-js-app-to-github-pages/">desarrolladas con NextJS</a>  o webs hechas usando distintos static site generators como <a href="https://medium.com/@magstherdev/github-pages-hugo-86ae6bcbadd">Hugo</a> o <a href="https://www.getzola.org/documentation/deployment/github-pages/">Zola</a> (de hecho, este blog está construido usando este último).</p>
+<p><img src="https://blog.gadcoder.com/posts/como-hostear-en-la-nube/static-site-meme.jpeg" alt="meme sobre static side generators" /></p>
+<h1 id="paginas-dinamicas">Páginas dinámicas</h1>
+<p>Sea cual sea el framework de JavaScript que estemos usando, lo más probable es que haya alguna plataforma que nos permita conectar nuestro repositorio con ella y tener deploys instantáneos cada vez que hacemos un pusheo. Vercel quizás sea la más conocida, pero también existen otras alternativas como Fly.io o Netlify. En cualquier caso, al usar un SaaS siempre es importante estar atento y limitar los recursos -dentro de lo posible- que vayamos a usar para no <a href="https://www.infoq.com/news/2024/06/vercel-serverless-scale-expenses/">terminar endeudados en el caso nuestra idea millonaria tenga éxito y pasemos a tener un gran tráfico de un día para el otro.</a></p>
+<p><img src="https://blog.gadcoder.com/posts/como-hostear-en-la-nube/vercel-meme.png" alt="meme sobre vercel y cómo es en realidad AWS pero con un sobrecosto del 500%" /></p>
+<h1 id="api-s-o-bases-de-datos">API’s o bases de datos</h1>
+<p>Igual que con las páginas dinámicas, existen una gran cantidad de plataformas que nos permiten deployar apis hechas con distintos lenguajes y frameworks, o bases de datos de todo tipo. En su momento era un gran fan de <a href="https://www.heroku.com/home">Heroku</a>, sin embargo, ante la <a href="https://www.heroku.com/pricing">muerte de su tier gratuito</a>, he probado otras alternativas como <a href="https://render.com">Render</a> o <a href="https://fly.io">Fly.io</a> sin tener ninguna queja de gravedad. El único inconveniente que he podido experimentar al hacer uso de los servicios gratuitos de dichas plataformas son los <strong>timeouts</strong> que se generan si el servicio web deja de recibir tráfico después de un tiempo determinado. Esto ocasiona que la siguiente petición posterior a ello tarde más de lo esperado, lo cuál puede no ser algo de gravedad en ciertos casos, pero no deja de ser algo molesto. </p>
+<p><img src="https://blog.gadcoder.com/posts/como-hostear-en-la-nube/heroku-meme.webp" alt="meme sobre heroku y el fin de su free tier" /></p>
+<h1 id="vps-a-not-so-new-hope">VPS: A - not so- new hope</h1>
+<table><thead><tr><th style="text-align: center"><img src="https://blog.gadcoder.com/posts/como-hostear-en-la-nube/new-hope-meme.jpeg" alt="a new hope" /></th></tr></thead><tbody>
+<tr><td style="text-align: center"><em>Luke Skywalker en el episodio 4 de Star War titulado, para aquellos que no capten la referencia</em></td></tr>
+</tbody></table>
+<p>El concepto de usar un servidor para hostear aplicaciones o servicios no es para nada nuevo. Antes de la llegada de términos como serverless, S3 o EC2, era común para las empresas contar con data centers en sus instalaciones sobre los cuales se montaban todos los servicios que pudiesen necesitar para sacar adelante su producto. Sin embargo, en los últimos 10 o 15 años la tendencia en el desarrollo de software ha sido la de abandonar lo propio y recurrir a plataformas como AWS, GCP o Azure.</p>
+<p><img src="https://blog.gadcoder.com/posts/como-hostear-en-la-nube/vps-meme.png" alt="meme sobre como ftp era mejor dijo nadie nunca" /></p>
+<p>No intento negar el gran beneficio que se puede llegar a tener al usar este tipo de servicios. Tener un uptime de 99.9%, escalar infinitamente -o mientras nuestra tarjeta lo aguante- y poder entregar contenido multimedia a cualquier parte del mundo con una latencia mínima son sin duda grandes avances tecnológicos de los que todos gozamos en nuestro día a día. Sin embargo, la realidad es que la gran mayoría de nuestros proyectos podrían vivir tranquilamente en servidores de 2 nucleos y 1gb de ram que corran Linux. </p>
+<p><img src="https://blog.gadcoder.com/posts/como-hostear-en-la-nube/tux.jpg" alt="tux" /></p>
+<p>Son cada vez más aquellos que deciden dejar de lado las nubes públicas y vuelven a las nubes privadas. Actualmente se tienen tantas alternativas -la gran mayoría de ellas open source y gratuitas- a los distintos servicios que ofrecen los gigantes de la nube, que para muchos el tradeoff de mantener un servidor propio empieza a ser cada vez menos relevante.
+<img src="https://blog.gadcoder.com/posts/como-hostear-en-la-nube/back-to-private-cloud.png" alt="tweet sobre como las empresas planean volver a nubes privadas" /></p>
+<table><thead><tr><th style="text-align: center"><img src="https://blog.gadcoder.com/posts/como-hostear-en-la-nube/dhh.png" alt="dhh tweet" /></th></tr></thead><tbody>
+<tr><td style="text-align: center"><em>Tweet de David Heinemeier Hansson, creador de Ruby on Rails, sobre el alto costo de usar Datadog</em></td></tr>
+</tbody></table>
+<table><thead><tr><th style="text-align: center"><img src="https://blog.gadcoder.com/posts/como-hostear-en-la-nube/levelsio.png" alt="levelsio" /></th></tr></thead><tbody>
+<tr><td style="text-align: center"><em>Tweet de levelsio, un dev famoso y millonario que usa un solo VPS para todos sus productos</em></td></tr>
+</tbody></table>
+<h2 id="saliendo-de-nuestra-zona-de-confort">Saliendo de nuestra zona de confort</h2>
+<p>La idea de configurar y usar un servidor Linux por primera vez puede llegar a ser intimidante para alguien que solo ha usado Windows hasta el momento. Sin embargo, creo que el aprender a hacerlo expande enormemente los conocimientos que uno tiene como desarrollador: configurar iptables para abrir puertos, dockerizar servicios y aplicaciones, configurar un reverse proxy como caddy o nginx para poder tener varios servicios en un mismo servidor, configurar DNS records y SSl en Cloudflare para no tener que usar la ip del servidor como url; todo ello son cosas que quizás nunca hubiera aprendido si me mantenia en mi zona de confort usando Netlify y Render para hostear mis proyectos. </p>
+<p>No es ninguna noticia que el mercado de desarrolladores de software se encuentra saturado. Desde hace años se viene vendiendo en redes sociales a nuestra profesión como una manera de hacerse rico de manera sencilla. Además, si bien la posibilidad de trabajar de manera remota es un gran privilegio con el que contamos, esto también abre la posibilidad a que no solo tengamos que competir con otros desarrolladores de nuestro país, sino que también tenemos que enfrentarnos con aquellos de países vecinos e incluso de países con una mano de obra considerablemente más barata, como la India. En ese sentido, y especialmente como alguien con poca o ninguna experiencia, uno necesita encontrar la manera de destacar por sobre los demás. Es así que ser el loquito linuxero que sabe levantar un servidor desde 0 y montar un pipeline de CI/CD puede que sea el factor diferenciador que necesitas.</p>
+
+
+        </div>
+        
+    <div class="section bottom-menu">
+        <hr/>
+        <p>
+            
+                
+                    <a href="&#x2F;posts">posts</a>
+                    &#183;
+                
+                    <a href="&#x2F;about">about</a>
+                    &#183;
+                
+                    <a href="https:&#x2F;&#x2F;github.com&#x2F;GadCoder">github</a>
+                    &#183;
+                
+            
+            <a href="https:&#x2F;&#x2F;blog.gadcoder.com">
+                home
+            </a>
+        </p>
+    </div>
+
+        
+    
+
+    </div>
+
+    </body>
+</html>

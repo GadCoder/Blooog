@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="chrome=1">
+        <meta name="HandheldFriendly" content="True">
+        <meta name="MobileOptimized" content="320">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="referrer" content="no-referrer">
+
+        <link rel="stylesheet" href="https://blog.gadcoder.com/fonts.css">
+        <link rel="stylesheet" href="https://blog.gadcoder.com/style.css">
+
+        <title>
+    Web Scrapping con python 101
+</title>
+
+        
+    </head>
+    <body>
+        
+    <div class="wrap">
+        <div class="section" id="title">
+            
+    Web Scrapping con python 101
+
+        </div>
+        <div class="section" id="sections">
+            
+        </div>
+        <div class="section" id="content">
+            
+    
+        
+            
+    
+    Wed Feb 21, 2024
+
+        
+        
+            
+                &#183; 1271 words
+            
+        
+        
+            
+            
+                &#183; 7 min
+            
+        
+        
+        
+        <hr/>
+    
+    <p>El arte del web scrapping es uno que todos en el mundo del software deberíamos conocer. Ya sea para crear un comparador de precios como <a href="https://compy.pe/">Compy</a> o armar datasets para nuestro siguiente modelo de Machine Learning, el saber cómo obtener los datos que necesitamos de una web es una habilidad que no hace daño tener.</p>
+<p>Entonces, ¿cómo puedo iniciarme en el oscuro arte del web scrapping?</p>
+<h1 id="tipos-de-web-scrapping">Tipos de Web Scrapping</h1>
+<p>Antes de empezar a robar información de páginas del gobierno, es útil saber qué tipos de escenarios nos podemos encontrar al momento de querer scrappear una web:</p>
+<h2 id="1-paginas-estaticas">1. Páginas estáticas</h2>
+<p>Son aquellas en las que no se requiere interacción alguna para poder acceder a la información que deseamos. Basta con obtener el código html de la página y ya tendremos acceso a toda su información. En el mejor de los casos, la información que queremos está ordenada en una tabla o una lista ordenada, pero la mayoría de las veces tendremos que encontrar el patrón que sigue nuestra página de interés <em>(un div, dentro de otro div, dentro de otro div...)</em>
+<img src="https://blog.gadcoder.com/posts/web-scrapping/resultados.png" alt="Resultados de un examen de admisión ordenados en una tabla" />
+<em><a href="https://admision.unmsm.edu.pe/WebsiteSimulacro20242/1/202/0.html">Resultados de un examen de admisión ordenados en una tabla</a></em></p>
+<h2 id="2-paginas-dinamicas">2. Páginas dinámicas</h2>
+<p>Para acceder a la información que deseamos es necesario interactuar de cierta manera con la web que intentamos scrappear. Simular el click en botones o llenar formularios son algunas de los primeros retos que uno se podría encontrar al iniciarse en el web scrapping.
+<img src="https://blog.gadcoder.com/posts/web-scrapping/pagina-latam.png" alt="Formulario de una aerolina para poder ver los vuelos de Lima a Tarapoto" />
+<em><a href="https://www.latamairlines.com/pe/es">Formulario interactivo de latam para poder listar vuelos</a></em></p>
+<h2 id="3-paginas-que-requieren-a-un-hechicero-de-mayor-nivel">3. Páginas que requieren a un hechicero de mayor nivel</h2>
+<p>En ciertas ocasiones, no bastará solo con simular interacciones con nuestra web de interés presionando botones o llenado formularios. Realizar peticiones HTTP, enviar cookies de request a request o usar alguna librería para simular distintos user-agents son algunas de las acciones que tendremos que realizar para poder obtener los datos que necesitamos. Puede darse incluso el caso en el que en un inicio tengamos que interactuar con una web -iniciando sesión por ejemplo- para luego obtener datos estáticos <em>(comentarios en una red social, listado de seguidores, etc)</em></p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">robar_receta_cangreburger</span><span>():
+</span><span>    url = &#39;</span><span style="color:#a3be8c;">https://api-totalmente-real/obtener-receta-cangreburger</span><span>&#39;
+</span><span>    bearer_token = </span><span style="color:#b48ead;">f</span><span>&#39;</span><span style="color:#a3be8c;">Bearer </span><span>{token}&#39;
+</span><span>    headers = {
+</span><span>        &#39;</span><span style="color:#a3be8c;">accept</span><span>&#39;: &#39;</span><span style="color:#a3be8c;">application/json, text/plain, */*</span><span>&#39;,
+</span><span>        &#39;</span><span style="color:#a3be8c;">Accept-Encoding</span><span>&#39;: &#39;</span><span style="color:#a3be8c;">gzip</span><span>&#39;,
+</span><span>        &#39;</span><span style="color:#a3be8c;">authorization</span><span>&#39;: bearer_token,
+</span><span>        &#39;</span><span style="color:#a3be8c;">Connection</span><span>&#39;: &#39;</span><span style="color:#a3be8c;">Keep-Alive</span><span>&#39;,
+</span><span>        &#39;</span><span style="color:#a3be8c;">Host</span><span>&#39;: &#39;</span><span style="color:#a3be8c;">don.cangrejo.com</span><span>&#39;,
+</span><span>        &#39;</span><span style="color:#a3be8c;">User-Agent</span><span>&#39;: &#39;</span><span style="color:#a3be8c;">okhttp/4.9.2</span><span>&#39;
+</span><span>    }
+</span><span>    request = requests.</span><span style="color:#bf616a;">get</span><span>(url, </span><span style="color:#bf616a;">headers</span><span>=headers, </span><span style="color:#bf616a;">cookies</span><span>=cookies)
+</span></code></pre>
+<p><em>Realizando una solicitud http usando un token de autenticación</em></p>
+<h1 id="que-herramientas-usar-ante-cada-situacion">¿Qué herramientas usar ante cada situación?</h1>
+<p>Si bien podemos usar distintas librerías para cada situación, existen algunas que suelen ser más usadas y de las que podremos encontrar mayor cantidad de documentación o preguntas en el difunto stackoverflow</p>
+<ul>
+<li><h2 id="para-paginas-estaticas">Para páginas estáticas</h2>
+</li>
+</ul>
+<h3 id="beautiful-soup"><a href="https://beautiful-soup-4.readthedocs.io/en/latest/">Beautiful Soup</a></h3>
+<ul>
+<li>Es una librería que permite transformar archivos HTML en estructuras de datos tipo árbol, lo cual permite que sea sencillo navegar a través de los distintos elementos que una página pueda contener.</li>
+<li>Con esta librería podemos hacer cosas como obtener todos los enlaces que una página contiene, todos los div que tienen como clase <em>data-container</em> o todos los <strong>tr</strong> dentro de una tabla.</li>
+<li>La belleza que tiene esta librería es que, al trabajar con arboles, brinda una gran flexibilidad para poder llegar a la información que requerimos. Quizás el <em>div</em> que contiene toda la información que buscamos no tiene un id, class o algo similar que nos permita acceder directamente a él, pero si el primer elemento que tiene es un <em>h1</em> con <em>id=&quot;page-tittle&quot;</em>, haciendo uso de <strong>.parent</strong> podemos llegar a dicho div<br />
+<em>Del siguiente html:</em></li>
+</ul>
+<pre data-lang="html" style="background-color:#2b303b;color:#c0c5ce;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#bf616a;">div</span><span>&gt;
+</span><span>  &lt;</span><span style="color:#bf616a;">h1 </span><span style="color:#8fa1b3;">id</span><span>=&quot;</span><span style="color:#a3be8c;">page-title</span><span>&quot;&gt;Listado de seres sensibles a la fuerza&lt;/</span><span style="color:#bf616a;">h1</span><span>&gt;
+</span><span>  &lt;</span><span style="color:#bf616a;">div</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#bf616a;">h3</span><span>&gt;Nombre:&lt;/</span><span style="color:#bf616a;">h3</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#bf616a;">h3</span><span>&gt;Planeta:&lt;/</span><span style="color:#bf616a;">h3</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#bf616a;">h3</span><span>&gt;Edad:&lt;/</span><span style="color:#bf616a;">h3</span><span>&gt;
+</span><span>  &lt;/</span><span style="color:#bf616a;">div</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#bf616a;">div</span><span>&gt;
+</span></code></pre>
+<p><em>Podemos acceder al div de interés de la siguiente manera</em></p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>    </span><span style="color:#65737e;"># Ubicamos el elemento que tiene como padre nuestro div de interés
+</span><span>    page_title = soup.</span><span style="color:#bf616a;">find</span><span>(</span><span style="color:#bf616a;">id</span><span>=&#39;</span><span style="color:#a3be8c;">page-title)</span><span style="background-color:#bf616a;color:#2b303b;">
+</span><span>    </span><span style="color:#65737e;"># Accedemos al div de interés mediante su elemento hijo usando .parent
+</span><span>    content-container = page_tittle.parent
+</span><span>
+</span></code></pre>
+<ul>
+<li><h2 id="para-paginas-dinamicas">Para páginas dinámicas</h2>
+</li>
+</ul>
+<h3 id="selenium"><a href="https://beautiful-soup-4.readthedocs.io/en/latest/">Selenium</a></h3>
+<ul>
+<li>Es una librería que permite simular interacciones humanas en un navegador web, como presionar botones o llenar campos de texto</li>
+<li>Permite localizar elementos a través de su id, name, class y, quizás lo más útil, XPath
+<ul>
+<li>XPath se puede entender como la dirección que tiene todo elemento dentro de un archivo HTML</li>
+</ul>
+</li>
+<li>Muchas veces el elemento al que queremos acceder no cuenta con un id, class, name o algo similar que permita su fácil identificación. El tener la opción de poder ubicarlo mediante su Xpath nos permite poder acceder e interacturar con prácticamente cualquier elemento html que una web pueda contener<br />
+<em>Del siguiente html:</em></li>
+</ul>
+<pre data-lang="html" style="background-color:#2b303b;color:#c0c5ce;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#bf616a;">html</span><span>&gt;
+</span><span>  &lt;</span><span style="color:#bf616a;">body</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#bf616a;">form </span><span style="color:#8fa1b3;">id</span><span>=&quot;</span><span style="color:#a3be8c;">loginForm</span><span>&quot;&gt;
+</span><span>      &lt;</span><span style="color:#bf616a;">input </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">username</span><span>&quot; </span><span style="color:#d08770;">type</span><span>=&quot;</span><span style="color:#a3be8c;">text</span><span>&quot; /&gt;
+</span><span>      &lt;</span><span style="color:#bf616a;">input </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">password</span><span>&quot; </span><span style="color:#d08770;">type</span><span>=&quot;</span><span style="color:#a3be8c;">password</span><span>&quot; /&gt;
+</span><span>      &lt;</span><span style="color:#bf616a;">input </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">continue</span><span>&quot; </span><span style="color:#d08770;">type</span><span>=&quot;</span><span style="color:#a3be8c;">submit</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">Login</span><span>&quot; /&gt;
+</span><span>      &lt;</span><span style="color:#bf616a;">input </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">continue</span><span>&quot; </span><span style="color:#d08770;">type</span><span>=&quot;</span><span style="color:#a3be8c;">button</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">Clear</span><span>&quot; /&gt;
+</span><span>    &lt;/</span><span style="color:#bf616a;">form</span><span>&gt;
+</span><span>  &lt;/</span><span style="color:#bf616a;">body</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#bf616a;">html</span><span>&gt;
+</span></code></pre>
+<p><em>Podemos ubicar el elemento form de usando Xpath de las siguientes maneras:</em></p>
+<pre data-lang="python" style="background-color:#2b303b;color:#c0c5ce;" class="language-python "><code class="language-python" data-lang="python"><span>login_form = driver.</span><span style="color:#bf616a;">find_element</span><span>(By.</span><span style="color:#bf616a;">XPATH</span><span>, &quot;</span><span style="color:#a3be8c;">/html/body/form[1]</span><span>&quot;)
+</span><span>login_form = driver.</span><span style="color:#bf616a;">find_element</span><span>(By.</span><span style="color:#bf616a;">XPATH</span><span>, &quot;</span><span style="color:#a3be8c;">//form[1]</span><span>&quot;)
+</span><span>login_form = driver.</span><span style="color:#bf616a;">find_element</span><span>(By.</span><span style="color:#bf616a;">XPATH</span><span>, &quot;</span><span style="color:#a3be8c;">//form[@id=&#39;loginForm&#39;]</span><span>&quot;)
+</span></code></pre>
+<ul>
+<li><h2 id="jutsus-prohibidos">Jutsus prohibidos</h2>
+Muchas veces es útil ver cómo es que la página que deseamos scrappear obtiene la información que muestra. Si bien hay casos en los que el servidor nos devuelve directamente un html de 20k lineas, lo más común es que exista un API encargado de entregar dicha información. Este <a href="https://www.youtube.com/watch?v=DqtlR0y0suo&amp;t=6s">video</a> lo explica bastante bien, pero muy a groso modo lo primero que uno debería hacer antes de empezar a scrappear una web es lo siguiente:
+<ol>
+<li>Abrir las dev tools del navegador y ver qué peticiones se realizan en el apartado de Network al momento de cargar nuestra página de interés.
+<img src="https://blog.gadcoder.com/posts/web-scrapping/image.png" alt="ejemplo de peticiones realizadas al momento de cargar una web" /></li>
+<li>Revisar las peticiones -de tipo html o javascript- en busca de la ruta al api que dicha web usa</li>
+<li>En caso de identificar el api que usa la web, ver los headers y payload que requiere para recibir peticiones
+<img src="https://blog.gadcoder.com/posts/web-scrapping/image-1.png" alt="ejemplo de headers que una solicitud requiere" /></li>
+<li>Probar dicho api en <strong>Postman</strong> o alguna herramienta similar, como <strong>Curl</strong> o <strong>Fetch</strong>
+<img src="https://blog.gadcoder.com/posts/web-scrapping/image-2.png" alt="ejemplo de solicitud http usando curl" /></li>
+</ol>
+</li>
+</ul>
+<p>La mayoría de las veces no será sencillo acceder al tan valioso api interno que usa una web. Un buen consejo sería revisar detalladamente todas las peticiones de tipo html o javascript que realiza una página. No son pocas las veces que revisando las secciones <em>script</em> de un html pude descubrir cómo es que dicha web obtiene su información.</p>
+<h1 id="precauciones-a-tomar-en-cuenta">Precauciones a tomar en cuenta</h1>
+<p><img src="https://blog.gadcoder.com/posts/web-scrapping/image-6.png" alt="alt text" />
+Si bien la acción de obtener datos de una web haciendo uso de web scrapping no es ilegal, lo que uno haga con dichos datos puede llegar a serlo. Obtener datos personales aprovechando los pocos o incluso nulos mecanismos de protección que suelen tener las páginas del estado es un ejemplo de ello. No son pocas también las compañías que ofrecen puestos de trabajo como anti scrapper.
+<img src="https://blog.gadcoder.com/posts/web-scrapping/image-3.png" alt="alt text" />
+<img src="https://blog.gadcoder.com/posts/web-scrapping/image-4.png" alt="alt text" /></p>
+<h1 id="conclusiones">Conclusiones</h1>
+<p>Este post tiene como finalidad el brindar los primeros pasos para alguien que desea iniciarse en el mundo del web scrapping. En un futuro la idea es realizar otros posts mostrando cómo usar las librerías mencionadas, y dar algunos trucos y consejos que he podido aprender en los años que llevo scrappeando páginas para fines totalmente lícitos y académicos.</p>
+
+
+        </div>
+        
+    <div class="section bottom-menu">
+        <hr/>
+        <p>
+            
+                
+                    <a href="&#x2F;posts">posts</a>
+                    &#183;
+                
+                    <a href="&#x2F;about">about</a>
+                    &#183;
+                
+                    <a href="https:&#x2F;&#x2F;github.com&#x2F;GadCoder">github</a>
+                    &#183;
+                
+            
+            <a href="https:&#x2F;&#x2F;blog.gadcoder.com">
+                home
+            </a>
+        </p>
+    </div>
+
+        
+    
+
+    </div>
+
+    </body>
+</html>
